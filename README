@@ -1,0 +1,6 @@
+An attempt at writing Norvig's constraint propagation and search
+algorithm in Haskell.
+
+To solve the sample puzzle, run:
+
+    > runhaskell Sudoku.hs
