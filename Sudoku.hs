@@ -29,7 +29,7 @@ create grid
     | length grid /= 81 = Nothing
     | not $ S.isSubsetOf (S.fromList grid) (S.fromList chars) = Nothing
     | otherwise = Just $ M.fromList (zip squares grid')
-    where grid' = map (\x -> [x]) grid
+    where grid' = map (\x -> [x]) grid -- (: [])?
 
 parseGrid :: Grid -> Maybe Grid
 parseGrid grid = let empty = M.fromList $ zip squares (repeat cols)
@@ -37,7 +37,7 @@ parseGrid grid = let empty = M.fromList $ zip squares (repeat cols)
                  in foldM (\e (s,d) -> assign s d e) empty givens
 
 assign :: String -> String -> Grid -> Maybe Grid
-assign square value grid = foldM (\g o -> eliminate square o g) grid others
+assign square value grid = foldM (flip eliminate square) grid others
     where others = (grid M.! square) \\ value
 
 eliminate :: String -> Char -> Grid -> Maybe Grid
