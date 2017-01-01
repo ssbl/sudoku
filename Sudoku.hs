@@ -37,7 +37,7 @@ parseGrid grid = let empty = M.fromList $ zip squares (repeat cols)
                  in foldM (\e (s,d) -> assign s d e) empty givens
 
 assign :: String -> String -> Grid -> Maybe Grid
-assign square value grid = foldM (flip eliminate square) grid others
+assign square value grid = foldM (flip (eliminate square)) grid others
     where others = (grid M.! square) \\ value
 
 eliminate :: String -> Char -> Grid -> Maybe Grid
