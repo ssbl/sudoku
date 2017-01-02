@@ -10,6 +10,19 @@ import qualified Data.Text       as T
 
 type Grid = M.Map String String
 
+showGrid :: Grid -> String
+showGrid grid = do
+  let width = succ . maximum . map length $ M.elems grid
+      line = (intercalate "+" . replicate 3 $ replicate (width * 3) '-') ++ "\n"
+      text_values = map (T.center width ' ' . T.pack) $ M.elems grid
+      rows = chunksOf 9 text_values
+      box_rows = map (chunksOf 3) rows
+      pretty_rows = map ((intercalate "|") . (map (concatMap T.unpack))) box_rows
+  intercalate line . map unlines $ chunksOf 3 pretty_rows
+
+display :: Grid -> IO ()
+display = putStrLn . showGrid
+
 rows = ['A'..'I']
 cols = ['1'..'9']
 chars = cols ++ "0."
@@ -72,18 +85,6 @@ search (Just grid) =
                              unsolved_list
       listToMaybe $ catMaybes
         [ search (assign min_unsolved [v] grid) | v <- grid M.! min_unsolved ]
-
-display :: Grid -> IO ()
-display values = do
-  let width = succ . maximum . map length $ M.elems values
-      line = (intercalate "+" . replicate 3 $ replicate (width * 3) '-') ++ "\n"
-      values' = map (T.center width ' ' . T.pack) $ M.elems values
-      rows = chunksOf 9 values'
-      rowChunks = map (chunksOf 3) rows
-      blah = map (map (concatMap T.unpack)) rowChunks
-      bleh = map (intercalate "|") blah
-      final = intercalate line . map unlines $ chunksOf 3 bleh
-  putStrLn final
 
 main = display . fromJust . search $
          parseGrid =<< create
