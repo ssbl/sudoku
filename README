@@ -1,6 +1,8 @@
-An attempt at writing Norvig's constraint propagation and search
+An attempt at implementing Norvig's constraint propagation and search
 algorithm in Haskell.
 
 To solve the sample puzzle, run:
 
     > runhaskell Sudoku.hs
+
+Dependencies: the split package (`Data.List.Split`)
