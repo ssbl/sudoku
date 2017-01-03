@@ -26,9 +26,6 @@ showGrid (Grid grid) = do
 instance Show Grid where
     show = showGrid
 
-display :: Grid -> IO ()
-display = putStrLn . showGrid
-
 rows = ['A'..'I']
 cols = ['1'..'9']
 chars = cols ++ "0."
