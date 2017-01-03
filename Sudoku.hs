@@ -20,7 +20,7 @@ showGrid (Grid grid) = do
       text_values = map (T.center width ' ' . T.pack) $ M.elems grid
       rows = chunksOf 9 text_values
       box_rows = map (chunksOf 3) rows
-      pretty_rows = map ((intercalate "|") . (map (concatMap T.unpack))) box_rows
+      pretty_rows = map (intercalate "|" . map (concatMap T.unpack)) box_rows
   intercalate line . map unlines $ chunksOf 3 pretty_rows
 
 instance Show Grid where
