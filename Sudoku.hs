@@ -1,8 +1,8 @@
--- Sudoku solver
+module Sudoku where
 
 import           Control.Monad
-import           Data.List
-import           Data.List.Split
+import           Data.List       (delete, intercalate, (\\))
+import           Data.List.Split (chunksOf)
 import qualified Data.Map        as M
 import           Data.Maybe
 import qualified Data.Set        as S
