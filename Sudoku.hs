@@ -95,7 +95,7 @@ search (Just _grid@(Grid grid)) =
         [ search (assign min_unsolved [v] _grid) | v <- grid M.! min_unsolved ]
 
 solve :: String -> IO ()
-solve grid = putStr . maybe "no solution" show . search
+solve grid = putStrLn . maybe "no solution" show . search
                $ parseGrid =<< create grid
 
 main = solve "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
