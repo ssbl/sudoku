@@ -84,7 +84,7 @@ search (Just _grid@(Grid grid)) =
     if all ((==1) . length) $ M.elems grid
     then return _grid
     else do
-      let unsolved = M.map length $ M.filter ((>1) . length) grid
+      let unsolved = M.filter (>1) $ M.map length grid
           unsolved_list = M.assocs unsolved
           (min_unsolved, _) = foldr (\min x -> if snd min > snd x
                                                then x
