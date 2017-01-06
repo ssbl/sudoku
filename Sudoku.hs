@@ -85,12 +85,11 @@ search (Just _grid@(Grid grid)) =
     then return _grid
     else do
       let unsolved = M.filter (>1) $ M.map length grid
-          unsolved_list = M.assocs unsolved
-          (min_unsolved, _) = foldr (\min x -> if snd min > snd x
-                                               then x
-                                               else min)
-                                    (head unsolved_list)
-                                    unsolved_list
+          (min_unsolved, _) = M.foldWithKey (\k v m -> if v < snd m
+                                                       then (k, v)
+                                                       else m)
+                                            (head $ M.assocs unsolved)
+                                            unsolved
       listToMaybe $ catMaybes
         [ search (assign min_unsolved [v] _grid) | v <- grid M.! min_unsolved ]
 
