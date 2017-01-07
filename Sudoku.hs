@@ -8,7 +8,7 @@ import           Data.Maybe
 import qualified Data.Set        as S
 import qualified Data.Text       as T
 
-newtype Grid = Grid { unGrid :: M.Map String String }
+newtype Grid = Grid { fromGrid :: M.Map String String }
 
 toGrid :: M.Map String String -> Grid
 toGrid = Grid
@@ -56,7 +56,7 @@ parseGrid (Grid grid) =
 
 assign :: String -> String -> Grid -> Maybe Grid
 assign square value grid = foldM (flip (eliminate square)) grid others
-    where others = (unGrid grid M.! square) \\ value
+    where others = (fromGrid grid M.! square) \\ value
 
 eliminate :: String -> Char -> Grid -> Maybe Grid
 eliminate square value _grid@(Grid grid) =
