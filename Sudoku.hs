@@ -3,7 +3,7 @@ module Sudoku where
 import           Control.Monad
 import           Data.List       (delete, intercalate, (\\))
 import           Data.List.Split (chunksOf)
-import qualified Data.Map        as M
+import qualified Data.Map.Lazy   as M
 import           Data.Maybe
 import qualified Data.Set        as S
 import qualified Data.Text       as T
@@ -85,11 +85,11 @@ search (Just _grid@(Grid grid)) =
     then return _grid
     else do
       let unsolved = M.filter (>1) $ M.map length grid
-          (min_unsolved, _) = M.foldWithKey (\k v m -> if v < snd m
-                                                       then (k, v)
-                                                       else m)
-                                            (head $ M.assocs unsolved)
-                                            unsolved
+          (min_unsolved, _) = M.foldrWithKey (\k v m -> if v < snd m
+                                                        then (k, v)
+                                                        else m)
+                                             (head $ M.assocs unsolved)
+                                             unsolved
       listToMaybe $ catMaybes
         [ search (assign min_unsolved [v] _grid) | v <- grid M.! min_unsolved ]
 
