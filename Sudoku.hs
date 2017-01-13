@@ -1,10 +1,10 @@
-module Sudoku where
+module Main where
 
-import           Control.Monad
+import           Control.Monad   (foldM)
 import           Data.List       (delete, intercalate, (\\))
 import           Data.List.Split (chunksOf)
 import qualified Data.Map.Lazy   as M
-import           Data.Maybe
+import           Data.Maybe      (catMaybes, fromJust, listToMaybe)
 import qualified Data.Set        as S
 import qualified Data.Text       as T
 
